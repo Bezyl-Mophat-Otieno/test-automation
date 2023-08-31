@@ -1,24 +1,26 @@
-name : Unit Tests
+name: Protecting the main branch from force push
+
 on:
-  pull-request:
+  pull_request:
     branches:
       - main
-jobs :
-    test:
-        runs-on: ubuntu-latest
-        steps:
-            - name : Copy code from repo into runner
-              uses : actions/checkout@v2
-            - name : Set Up Nodr
-              uses : actions/setup-node@v1
-              with:
-                    node-version: '18.x'
-            - name : Install Dependencies
-              run : npm install
-            - name : Run Tests 
-              run : npm test
-            - name : Generate Artifacts
-              uses : actions/upload-artifact@v2
-              with:
-                        name: test-results
-                        path: test-report.html
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Copy my code into the container
+        uses: actions/checkout@v2
+      - name: Set Up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.x'
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
+      - name: Generate Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: test-report.html
