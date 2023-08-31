@@ -1,0 +1,24 @@
+name : Unit Tests
+on:
+  pull-request:
+    branches:
+      - main
+jobs :
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name : Copy code from repo into runner
+              uses : actions/checkout@v2
+            - name : Set Up Nodr
+              uses : actions/setup-node@v1
+              with:
+                    node-version: '18.x'
+            - name : Install Dependencies
+              run : npm install
+            - name : Run Tests 
+              run : npm test
+            - name : Generate Artifacts
+              uses : actions/upload-artifact@v2
+              with:
+                        name: test-results
+                        path: test-report.html
