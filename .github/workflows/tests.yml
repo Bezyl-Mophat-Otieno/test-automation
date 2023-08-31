@@ -1,0 +1,25 @@
+name : Unit Testing with jest .
+on:
+    push:
+        branches:
+            - main
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name : CheckOut
+              uses : actions/checkout@v2
+            - name : Setup Node.js
+              uses : actions/setup-node@v2
+              with:
+                node-version: :'18.x'
+            - name : Install Dependencies
+              run : npm install
+            - name : Run Tests
+              run : npm run test
+            - name : Upload Reports in Github artifacts
+              uses : actions/upload-artifact@v2
+              with:
+                name: test-report
+                path: test-report.html
+
